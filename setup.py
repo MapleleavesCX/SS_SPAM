@@ -2,44 +2,41 @@ from setuptools import setup, find_packages
 
 setup(
 
-    name='your-library-name',
+    name='SS_SPAM',
 
     version='0.1.0',
 
-    author='MapleleavesCX / Rex / sdushushu / ',
+    author='MapleleavesCX / Rex / sdushushu / Taorich',
 
     author_email='None',
 
-    description='A short description of your library',
+    description='A privacy preserving spam filter based on SecretFlow',
 
     long_description=open('README.md').read(),
 
     long_description_content_type='text/markdown',
 
-    url='https://github.com/yourusername/your-library-name',
+    url='https://github.com/MapleleavesCX/SS_SPAM/',
 
     packages=find_packages(),
 
     classifiers=[
-
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Developers',
+        'Topic :: Software Development :: Libraries :: Python Modules',
         'Programming Language :: Python :: 3',
-
-        'License :: OSI Approved :: MIT License',
-
-        'Operating System :: OS Independent',
-
+        'Programming Language :: Python :: 3.10',
+        'License :: OSI Approved :: None',
+        'Operating System :: POSIX :: Linux',
     ],
 
-    python_requires='>=3.6',
+    python_requires='>=3.10',
 
     install_requires=[
-
-        # 列出你的库依赖的其他Python包
-
-        'requests',
-
-        'numpy',
-
+        'SecretFlow',
+        'sklearn',
+        'nltk',
+        'pandas'
     ],
 
 )
