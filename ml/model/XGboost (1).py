@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# @Date    : 2024/08/XX
-# @Author  : XXXX
+# @Date    : 2024/08/22
+# @Author  : Sdushushu
 
 
 import secretflow as sf
