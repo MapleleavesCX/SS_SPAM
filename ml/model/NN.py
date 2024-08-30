@@ -13,10 +13,10 @@ def create_conv_model(input_shape, num_classes, name='model'):
         # Create model
         model = keras.Sequential([
         keras.Input(shape=input_shape),
-        layers.Dense(128, activation="relu"),
-        layers.Dropout(0.5),
+        layers.Dense(512, activation="relu",kernel_regularizer=regularizers.l2(0.01)),
+        layers.Dropout(0.8),
         layers.Dense(64, activation="relu"),
-        layers.Dropout(0.5),
+        layers.Dropout(0.6),
         layers.Dense(num_classes, activation="sigmoid"),  # 使用sigmoid适合二分类
     ])
         # Compile model
