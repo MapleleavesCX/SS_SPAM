@@ -98,7 +98,7 @@ class ss_spam:
         self.preprocessor.reduce_dimensions(method=reduce_dim_method, 
                                        n_components=_n_components)
         # 返回输出特征矩阵和标签
-        X, y = self.preprocessor.get_X_y()
+        self.X, y = self.preprocessor.get_X_y()
 
         # LR的训练数据集必须标准化或规范化
         scaler = StandardScaler()
