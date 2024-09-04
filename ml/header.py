@@ -7,7 +7,7 @@ from .model.SecureLogisticRegression import SecureLogisticRegression
 from .model.DecisionTree import SecureDecisionTree
 from .model.XGboost import SecureXGboost
 from .model.NN import SecureNN
-from .model.SSGLM import ssglm
+from .model.SSGLM import SecureSSGLM
 
 
 class model_selector:
@@ -17,7 +17,7 @@ class model_selector:
         1: SecureLogisticRegression(spu),
         2: SecureDecisionTree(spu),
         3: SecureNN(Server, Clients, others),
-        4: ssglm(spu),
+        4: SecureSSGLM(spu),
 
         99:SecureXGboost(Server, Clients)
         '''
