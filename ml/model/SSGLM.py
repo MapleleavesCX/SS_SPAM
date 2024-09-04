@@ -16,7 +16,7 @@ params = {
 }
 '''
 
-class ssglm:
+class SecureSSGLM:
 
     def __init__(self, spu):
         self.model = SSGLM(spu)
