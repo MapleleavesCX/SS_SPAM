@@ -28,10 +28,10 @@ PS: 添加新模型请到 .ml/header.py 中的 model_selector 类
 **************************************************************************************************
 
 依赖：
-SecretFlow v1.5.0b0
-sklearn v1.1.2
-nltk v3.8.1  (初次使用需要下载处理文本的停用词等内容，请保证网络条件通畅)
-pandas v1.5.1
+secretflow v1.5.0b0
+scikit-learn
+nltk  (初次使用需要下载处理文本的停用词等内容，请保证网络条件通畅)
+pandas
 
 **************************************************************************************************
 '''
@@ -141,47 +141,20 @@ if __name__ == '__main__':
     # 假设用户选择了模型ID为1的 SecureLogisticRegression 模型
     model_id = 1
 
-
-    #*****************************************SPU设置*********************************************
-
-    ray.shutdown()
-
-    # 集群仿真参数
-    ray_addr = '192.168.211.129:9000'
-    alice_ip = '192.168.211.129'
-    alice_port = '9100'
-    bob_ip = '192.168.211.129'
-    bob_port = '9200'
-
-    # 请使用ray 头地址.
-    # sf.init(parties=['alice', 'bob'], address='ray_ip:ray_port')
-    sf.init(parties=['alice', 'bob'], address=ray_addr)
-
-    cluster_def={
-        'nodes': [
-            {
-                'party': 'alice',
-                'address': f'{alice_ip}:{alice_port}',
-                'listen_addr': f'0.0.0.0:{alice_port}'
-            },
-            {
-                'party': 'bob',
-                'address': f'{bob_ip}:{bob_port}',
-                'listen_addr': f'0.0.0.0:{bob_port}'
-            },
-        ],
-        'runtime_config': {
-            'protocol': spu.spu_pb2.SEMI2K,
-            'field': spu.spu_pb2.FM128,
-            'sigmoid_mode': spu.spu_pb2.RuntimeConfig.SIGMOID_REAL,
-        }
-    }
-
-    spu = sf.SPU(cluster_def=cluster_def)
-
+    # 参与节点列表
+    member = ['alice', 'bob']
     # 初始化 PYU
     alice = sf.PYU('alice')
     bob = sf.PYU('bob')
+
+
+    #*****************************************SPU设置*********************************************
+    
+    # 请使用ray 头地址.
+    # sf.init(parties=['alice', 'bob'], address='ray_ip:ray_port')
+    sf.init(parties=member, address='local')
+
+    spu = sf.SPU(sf.utils.testing.cluster_def(member))
 
     print('初始化隐私保护垃圾邮件过滤器...')
     run = ss_spam(model_id, spu)
