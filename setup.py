@@ -8,7 +8,7 @@ setup(
 
     author='MapleleavesCX / Rex / sdushushu / Taorich',
 
-    author_email='None',
+    author_email='3218391826@qq.com',
 
     description='A privacy preserving spam filter based on SecretFlow',
 
