@@ -15,9 +15,9 @@
 - secretflow 1.5.0b0
   - https://www.secretflow.org.cn/zh-CN/docs/secretflow/v1.5.0b0/source/secretflow
 - python >=3.10
-- sklearn v1.1.2
+- scikit-learn v1.5.1
 - nltk v3.8.1  
-- pandas v1.5.1
+- pandas v2.2.2
 
 文本处理需要下载停用词，所以需要保证网络环境通畅否则文本处理器会报错
 
