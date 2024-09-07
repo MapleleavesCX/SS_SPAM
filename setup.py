@@ -33,8 +33,8 @@ setup(
     python_requires='>=3.10',
 
     install_requires=[
-        'SecretFlow',
-        'sklearn',
+        'secretflow',
+        'scikit-learn',
         'nltk',
         'pandas'
     ],
