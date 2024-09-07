@@ -26,7 +26,7 @@ class model_selector:
             1: SecureLogisticRegression,
             2: SecureDecisionTree,
             3: SecureNN,
-            4: ssglm,
+            4: SecureSSGLM,
             # 其他模型的映射...
 
             99: SecureXGboost,
