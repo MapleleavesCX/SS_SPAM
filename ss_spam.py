@@ -13,7 +13,7 @@
 1: SecureLogisticRegression(spu),      逻辑回归
 2: SecureDecisionTree(spu),            决策树
 3: SecureNN(Server, Clients, others),  神经网络
-4: ssglm(spu),                         广义线性模型
+4: SecureSSGLM(spu),                   广义线性模型
 
 99: SecureXGboost(Server, Clients), # 不兼容当前格式的函数， 目前仅测试用， 不可调用predict
 
@@ -30,8 +30,17 @@ PS: 添加新模型请到 .ml/header.py 中的 model_selector 类
 依赖：
 secretflow v1.5.0b0
 scikit-learn
-nltk  (初次使用需要下载处理文本的停用词等内容，请保证网络条件通畅)
 pandas
+nltk  
+(
+    初次使用需要下载处理文本的停用词等内容，内置自动下载函数 check_nltk_resources 请保证网络条件通畅；
+    如 check_nltk_resources 自动化下载失败，可以尝试手动下载：
+    https://www.nltk.org/nltk_data/
+     -下载文件ID:
+        id: stopwords
+        id: punkt
+)
+
 
 **************************************************************************************************
 '''
@@ -150,8 +159,6 @@ if __name__ == '__main__':
 
     #*****************************************SPU设置*********************************************
     
-    # 请使用ray 头地址.
-    # sf.init(parties=['alice', 'bob'], address='ray_ip:ray_port')
     sf.init(parties=member, address='local')
 
     spu = sf.SPU(sf.utils.testing.cluster_def(member))
