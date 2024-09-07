@@ -60,7 +60,6 @@ except ImportError:
         print(f"Failed to install nltk: {e}")
         sys.exit(1)
 
-
 import nltk
 import pandas as pd
 import string
@@ -83,10 +82,11 @@ def check_nltk_resources():
 
         try:
             nltk.download('stopwords', quiet=False)
+            stopwords.words('english')
             print("Success!")
 
         except Exception as e:
-            print(f"Failed to download stopwords: {e}")
+            print(f"[E] Failed to download stopwords: {e}")
             sys.exit(1)
 
     try:
@@ -98,10 +98,11 @@ def check_nltk_resources():
         print("Downloading Punkt tokenizer...")
         try:
             nltk.download('punkt', quiet=False)
+            nltk.data.find('tokenizers/punkt')
             print("Success!")
 
         except Exception as e:
-            print(f"Failed to download Punkt tokenizer: {e}")
+            print(f"[E] Failed to download Punkt tokenizer: {e}")
             sys.exit(1)
 
 
@@ -232,7 +233,7 @@ if __name__ == '__main__':
 
     # 加载数据
     print("加载数据...")
-    data = preprocessor.load_data(input_file_path='SpamData.csv')
+    data = preprocessor.load_data(input_file_path='../data/SpamData.csv')
 
     # 提取特征（内置预处理数据），可自定义提取方法method
     print("预处理，并提取特征...")
@@ -247,7 +248,7 @@ if __name__ == '__main__':
 
     # 保存处理后的数据到CSV文件
     print("保存中...")
-    preprocessor.save_to_csv(output_file_path='new_SpamData.csv')
+    preprocessor.save_to_csv(output_file_path='../data/new_SpamData.csv')
 
     print("over!")
 
