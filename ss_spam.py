@@ -2,7 +2,7 @@
 # @Date    : 2024/08/25
 # @Author  : MapleleavesCX
 
-# 这里是 主调类 ss_spam
+# 这里是 主调类 pp_spam_filter
 '''
 考虑多种模型与多种应用情况,本篇对代码标准作统一说明:
 **************************************************************************************************
@@ -17,7 +17,7 @@
 
 99: SecureXGboost(Server, Clients), # 不兼容当前格式的函数， 目前仅测试用， 不可调用predict
 
-PS: 添加新模型请到 .ml/header.py 中的 model_selector 类
+PS: 添加新模型请到 /ml/header.py 中的 model_selector 类
 
 **************************************************************************************************
 统一未处理的初始数据集格式：
@@ -62,7 +62,7 @@ from ml.header import model_selector
 from ml.TextPreprocessor import check_nltk_resources, TextPreprocessor
 from ml.toolfunc import Divide_X, Divide_y
 
-class ss_spam:
+class pp_spam_filter:
     '''隐私保护的垃圾邮件过滤器'''
     def __init__(self, model_id, *args, **kwargs):
         
@@ -164,7 +164,7 @@ if __name__ == '__main__':
     spu = sf.SPU(sf.utils.testing.cluster_def(member))
 
     print('初始化隐私保护垃圾邮件过滤器...')
-    run = ss_spam(model_id, spu)
+    run = pp_spam_filter(model_id, spu)
 
     print('文本处理中...')
     X, y = run.Textprocessor(_input_file_path=_input_file_path)
