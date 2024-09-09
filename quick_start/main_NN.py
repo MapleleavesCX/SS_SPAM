@@ -1,3 +1,4 @@
+import os
 import sys
 import logging
 import numpy as np
@@ -10,8 +11,13 @@ import secretflow as sf
 from secretflow.device.driver import wait, reveal
 from secretflow.data import FedNdarray, PartitionWay
 
-from ss_spam import ss_spam
 
+# 获取当前文件所在的绝对路径然后提取其父目录的父目录，即项目的根目录
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# 将项目的根目录添加到系统路径中
+sys.path.append(ROOT_DIR)
+
+from ss_spam import ss_spam
 from ml.toolfunc import Divide_X, Divide_y
 
 '''注意修改路径'''
@@ -22,7 +28,7 @@ if __name__ == '__main__':
     logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
     # 文本处理参数集合
-    _input_file_path = '../data/SpamData.csv'
+    _input_file_path = os.path.join(ROOT_DIR, 'data', 'SpamData.csv')
     # 模型选择参数
     # 假设用户选择了模型ID为3的 SecureNN 模型
     model_id = 3
