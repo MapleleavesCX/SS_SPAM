@@ -34,7 +34,7 @@
 ### ss_spam.py
 
 ```python
-class ss_spam:
+class pp_spam_filter:
 ```
 
 pp_spam_filter是主调类，负责统一不同模块之间不同调用的方式，这样用同一个api就可以调用不同的模块。
