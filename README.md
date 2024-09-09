@@ -37,9 +37,9 @@
 class ss_spam:
 ```
 
-ss_spam是主调类，负责统一不同模块之间不同调用的方式，这样用同一个api就可以调用不同的模块。
+pp_spam_filter是主调类，负责统一不同模块之间不同调用的方式，这样用同一个api就可以调用不同的模块。
 
-ss_spam下定义了多个函数。
+pp_spam_filter下定义了多个函数。
 
 - _init___用于初始化模型 
 
@@ -131,10 +131,10 @@ ss_spam下定义了多个函数。
 spu = sf.SPU(cluster_def=cluster_def)
 ```
 
-然后调用ss_spam初始化模型
+然后调用pp_spam_filter初始化模型
 
 ```
-run = ss_spam(model_id, spu)
+run = pp_spam_filter(model_id, spu)
 ```
 
 之后即可调用 Textprocessor 处理数据
