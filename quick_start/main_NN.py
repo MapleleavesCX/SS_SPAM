@@ -21,7 +21,7 @@ ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # 将项目的根目录添加到系统路径中
 sys.path.append(ROOT_DIR)
 
-from ss_spam import ss_spam
+from ss_spam import pp_spam_filter
 from ml.toolfunc import Divide_X, Divide_y
 
 '''注意修改路径'''
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     server = sf.PYU('server')
     clients = [alice, bob]
     print('初始化隐私保护垃圾邮件过滤器...')
-    run = ss_spam(model_id, Server=server, Clients=clients)
+    run = pp_spam_filter(model_id, Server=server, Clients=clients)
 
     print('文本处理中...')
     X, y = run.Textprocessor(_input_file_path=_input_file_path)
