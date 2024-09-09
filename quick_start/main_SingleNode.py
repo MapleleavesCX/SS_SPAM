@@ -16,9 +16,25 @@ from secretflow.data.split import train_test_split
 from secretflow.device.driver import wait, reveal
 from secretflow.data import FedNdarray, PartitionWay
 
-from ..ml.header import model_selector
-from ..ml.TextPreprocessor import check_nltk_resources, TextPreprocessor
-from ..ml.toolfunc import Divide_X, Divide_y
+
+
+import os
+# 获取当前文件所在的绝对路径然后提取其父目录的父目录，即项目的根目录
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# 将项目的根目录添加到系统路径中
+sys.path.append(ROOT_DIR)
+
+# 读取路径
+data_path = os.path.join(ROOT_DIR, 'data', 'SpamData.csv')
+# 存储路径
+new_data_path = os.path.join(ROOT_DIR, 'data', 'NewSpamData.csv')
+
+
+from ml.header import model_selector
+from ml.TextPreprocessor import check_nltk_resources, TextPreprocessor
+from ml.toolfunc import Divide_X, Divide_y
+
 
 
 
@@ -40,7 +56,7 @@ preprocessor = TextPreprocessor()
 
 # 加载数据
 print("加载数据...")
-data = preprocessor.load_data(input_file_path='../data/SpamData.csv')
+data = preprocessor.load_data(input_file_path=data_path)
 
 # 提取特征（内置预处理数据），可自定义提取方法method
 print("预处理，并提取特征...")
@@ -54,9 +70,11 @@ preprocessor.reduce_dimensions(method='pca', n_components=1000)
 print("处理完成，输出内容！")
 X, y = preprocessor.get_X_y()
 
+
+
 # # 保存处理后的数据到CSV文件
 # print("保存中...")
-# preprocessor.save_to_csv(output_file_path='../data/new_SpamData.csv')
+# preprocessor.save_to_csv(output_file_path=new_data_path)
 # print("over!")
 
 
@@ -65,7 +83,7 @@ X, y = preprocessor.get_X_y()
 # # 读取处理后的数据
 # print("读取处理后的数据...")
 # # 这里需要根据个人存放数据集的路径去更改
-# newdata = pd.read_csv('../data/new_SpamData.csv')
+# newdata = pd.read_csv(new_data_path)
 
 # # 提取特征和标签(会自动去除作为列名的第一行)
 # print('提取特征和标签...')
