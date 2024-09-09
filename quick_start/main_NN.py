@@ -11,7 +11,7 @@ from secretflow.device.driver import wait, reveal
 from secretflow.data import FedNdarray, PartitionWay
 
 sys.path.append('../')
-from Ss_spam import ss_spam
+from ss_spam import ss_spam
 
 from ml.toolfunc import Divide_X, Divide_y
 
