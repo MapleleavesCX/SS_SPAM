@@ -3,7 +3,7 @@
 # @Author  :Rex
 
 from tensorflow import keras
-from tensorflow.keras import layers
+from tensorflow.keras import layers,regularizers
 import secretflow as sf
 from secretflow.ml.nn import FLModel
 from secretflow.security.aggregation import SecureAggregator
