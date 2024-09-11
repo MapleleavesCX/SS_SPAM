@@ -32,7 +32,7 @@ class SecureSSGLM:
         # 只有 fit_sgd 有参数 learning_rate 和 batch_size ，故调整如下：
         if option == 'sgd':
             self.model.fit_sgd(X_train, y_train, link='Logit', dist='Bernoulli', 
-                               learning_rate=sgd_LR, batch_size=sgd_BatchSize **params)
+                               learning_rate=sgd_LR, batch_size=sgd_BatchSize, **params)
         elif option == 'irls':
             self.model.fit_irls(X_train, y_train, link='Logit', dist='Bernoulli', **params)
         else:
