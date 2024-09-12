@@ -1,5 +1,5 @@
 
-from filter import pp_spam_filter
+from ss_spam import pp_spam_filter
 
 # 示例使用
 if __name__ == '__main__':
