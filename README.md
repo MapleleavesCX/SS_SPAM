@@ -42,7 +42,7 @@
 ## 文件结构
 
 ```
-SS_SPAM-0.10
+SS_SPAM v0.1.0
 ├── data
 │   └── SpamData.csv
 ├── ml
