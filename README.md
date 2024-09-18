@@ -60,8 +60,8 @@ SS_SPAM v0.2.0
 │   | 	├── XGboost.py 
 │   | 	├── NN.py
 │   | 	├── SecureLogisticRegression.py
-|	 | 	├── SSGLM.py
-| | └── new_model_example.py
+|	  | 	├── SSGLM.py
+|   |   └── new_model_example.py
 │   ├── __init__.py
 │   ├── header.py
 │   ├── newTextPreprocessor.py #新的文本处理器
