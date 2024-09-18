@@ -1,4 +1,4 @@
-# SS_SPAM 基于隐语的隐私保护垃圾邮件过滤器-2.0
+# SS_SPAM 基于隐语的隐私保护垃圾邮件过滤器 v0.2.0
 
 ## 目录
 - [简介](#简介)
@@ -49,7 +49,7 @@ https://www.nltk.org/nltk_data/
 ## 文件结构
 
 ```
-SS_SPAM-0.20
+SS_SPAM v0.2.0
 ├── data
 │   ├── spam1.csv
 │   └── Spam2.csv
@@ -60,8 +60,8 @@ SS_SPAM-0.20
 │   | 	├── XGboost.py 
 │   | 	├── NN.py
 │   | 	├── SecureLogisticRegression.py
-|	  | 	├── SSGLM.py
-| 	| 	└── new_model_example.py
+|	 | 	├── SSGLM.py
+| | └── new_model_example.py
 │   ├── __init__.py
 │   ├── header.py
 │   ├── newTextPreprocessor.py #新的文本处理器
