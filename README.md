@@ -100,10 +100,11 @@ ss_spam下定义了多个函数。
   ##### 参数说明
 
   - model_id  模型选择（必选）
-    - 1: SecureLogisticRegression(spu)       逻辑回归
-    - 2: SecureDecisionTree(spu)                 决策树
-    - 3: SecureNN(Server, Clients, others)  神经网络
-    - 4: SecureSSGLM(spu)                            广义线性模型
+    - 1001: SecureLogisticRegression(spu),
+    - 1002: SecureDecisionTree(spu),
+    - 1003: SecureSSGLM(spu),
+    - 2001: SecureNN(Server, Clients, others),
+    - 2099:SecureXGboost(Server, Clients)        模型不兼容！不可用
   - extract_feat_method 特征工程处理方法选择（必选）
     - 'bow'
     - 'tfidf'
@@ -140,7 +141,7 @@ ss_spam下定义了多个函数。
     
   - message_column_name   文本列名称
 
-  - \- labels_column_name   标签列名称
+  - labels_column_name   标签列名称
 
   可选参数： 
 
