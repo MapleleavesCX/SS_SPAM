@@ -1,7 +1,15 @@
-# SS_SPAM 基于隐语的隐私保护垃圾邮件过滤器 v0.1.0
+# SS_SPAM 基于隐语的隐私保护垃圾邮件过滤器-1.0
 
-
-
+## 目录
+- [简介](#简介)
+- [环境](#环境)
+- [数据集格式](#数据集格式)
+- [文件结构](#文件结构)
+- [安装](#安装)
+- [使用](#使用)
+- [贡献指南](#贡献指南)
+- [联系方式](#联系方式)
+- [致谢](#致谢)
 ## 简介
 
 本工具基于隐语框架，实现包含多种隐私计算机器学习模型可选的垃圾邮件过滤器，统一接口，统一格式，结合文本处理与隐语的隐私计算模型框架，功能上方便用户使用同时、也方便其他开发者增加新的模型或者算法，即：一个多模型、易扩展、用户友好的过滤器。
@@ -15,21 +23,53 @@
 - python >=3.10
 - scikit-learn v1.5.1
 - nltk v3.8.1  
-- pandas v2.2.2
+- pandas v1.5.1
 
 文本处理需要下载停用词，所以需要保证网络环境通畅否则文本处理器会报错
 
 
 
-## 统一未处理的初始数据集格式
+## 数据集格式
 
-​           第一列          				第二列
+统一未处理的初始数据格式
 
-判断是否为垃圾邮件          邮件文本内容
+|       第一列       |    第二列    |
+| :----------------: | :----------: |
+| 判断是否为垃圾邮件 | 邮件文本内容 |
 
 
 
 ## 文件结构
+
+```
+SS_SPAM-0.10
+├── data
+│   └── SpamData.csv
+├── ml
+│   ├── model #可选模型
+│   |	├── __init__.py
+│   |	├── DecisionTree.py 
+│   |	├── XGboost.py 
+│   |	├── NN.py
+│   |	├── SecureLogisticRegression.py
+|   |   ├── SSGLM.py
+|   |   └── new_model_example.py
+│   ├── __init__.py
+│   ├── header.py
+│   ├── TextPreprocessor.py #文本处理
+│   └── toolfunc.py 
+├── quick_star#使用demo
+│   ├── main_ClusterSimulation.py
+│   ├── main_NN.py
+│   └── main_SingleNode.py
+├── __init__.py
+├── LICENSE
+├── README.md
+├── setup.py
+└── ss_spam.py
+```
+
+
 
 ### ss_spam.py
 
@@ -37,34 +77,27 @@
 class pp_spam_filter:
 ```
 
-pp_spam_filter是主调类，负责统一不同模块之间不同调用的方式，这样用同一个api就可以调用不同的模块。
+ss_spam是主调类，负责统一不同模块之间不同调用的方式，这样用同一个api就可以调用不同的模块。
 
-pp_spam_filter下定义了多个函数。
+ss_spam下定义了多个函数。
 
 - _init___用于初始化模型 
 
   ```python
   def __init__(self, model_id, *args, **kwargs):
-          
-          # 初始化模型
-          self.model = model_selector(model_id, *args, **kwargs)
-          # 调用函数检查资源
-          check_nltk_resources()
-          # 初始化文本处理器
-          self.preprocessor = TextPreprocessor()
   ```
-
+  
   ##### 参数说明
-
+  
   - model_id  模型选择
-
-    - 1: SecureLogisticRegression(spu)   逻辑回归
-    - 2: SecureDecisionTree(spu)       决策树
+  
+    - 1: SecureLogisticRegression(spu)       逻辑回归
+    - 2: SecureDecisionTree(spu)                 决策树
     - 3: SecureNN(Server, Clients, others)  神经网络
-    - 4: ssglm(spu)            广义线性模型
-
+    - 4: SecureSSGLM(spu)           				 广义线性模型
+  
     
-
+  
 - Textprocessor 用于处理数据集
 
   从本地加载完数据集后对数据进行处理，然后再对数据进行标准化和规范化。
@@ -131,10 +164,10 @@ pp_spam_filter下定义了多个函数。
 spu = sf.SPU(cluster_def=cluster_def)
 ```
 
-然后调用pp_spam_filter初始化模型
+然后调用ss_spam初始化模型
 
 ```
-run = pp_spam_filter(model_id, spu)
+run = ss_spam(model_id, spu)
 ```
 
 之后即可调用 Textprocessor 处理数据
@@ -161,188 +194,9 @@ run.train()
 run.predict()
 ```
 
-### ml
-
-#### model
-
-该目录下包含此次所实现的几个模型
-
-- ##### DecisionTree.py
-
-  定义了类SecureDecisionTree，
-
-  ```
-  class SecureDecisionTree:
-  ```
-
-  在类下定义了初始化函数_init__,训练函数fit和预测函数predict。
-
-  ```
-  def __init__(self, spu)
-  
-  def fit(self, X_train, y_train, params={
-              'num_boost_round': 5,
-              'max_depth': 5,
-              'learning_rate': 0.1,
-              'sketch_eps': 0.08,
-              'objective': 'logistic',
-              'reg_lambda': 0.1,
-              'subsample': 1,
-              'colsample_by_tree': 1,
-              'base_score': 0.5,
-          })
-          
-  def predict(self, X_test):
-  ```
-
-- ##### NN.py
-
-  首先定义了函数create_conv_model来创建模型，
-
-  ```
-  def create_conv_model(input_shape, num_classes, name='model'):
-  ```
-
-  接着定义了SecureNN类，
-
-  ```
-  class SecureNN:
-  ```
-
-  在类下定义了初始化函数_init__,训练函数fit和预测函数predict。
-
-  ```
-  def __init__(self, 
-                   Server, Clients, 
-                   Input_shape=1,
-                   Num_classes=(1000, ),
-                   others={
-                      'strategy':"fed_avg_w",
-                      'backend':"tensorflow",
-                   }):
-         
-  def fit(self, X_train, y_train, 
-                params={
-                  'epochs':10,
-                  'sampler_method':"batch",
-                  'batch_size':128,
-                  'aggregate_freq':1,
-              }):
-              
-  def predict(self, X_test, _batch_size=32):
-  ```
-
-- ##### SecureLogisticRegression.py
-
-  定义了类SecureLogisticRegression，
-
-  ```
-  class SecureLogisticRegression:
-  ```
-
-  在类下定义了初始化函数_init__,训练函数fit和预测函数predict。
-
-  ```
-  def __init__(self, spu):
-  
-  def fit(self, X_train, y_train, params = {
-              'epochs':5,
-              'learning_rate':0.3,
-              'batch_size':32,
-              'sig_type':'t1',
-              'reg_type':'logistic',
-              'penalty':'l2', 
-              'l2_norm':0.1
-              }
-              
-  def predict(self, X_test):
-  ```
-
-- ##### SSGLM.py
-
-  定义了类SecureSSGLM，
-
-  ```
-  class SecureSSGLM:
-  ```
-
-  在类下定义了初始化函数_init__,训练函数fit和预测函数predict。
-
-  ```
-  def __init__(self, spu):
-  
-  def fit(self, X_train, y_train, option='sgd', params = {
-                      'learning_rate': 0.1,
-                      'batch_size': 1024,
-                      'eps': 1e-4,
-                      'epochs': 100,
-                      'l2_lambda': 0.01
-                  }):
-                  
-  def predict(self, X_test):
-  ```
-
-- ##### XGBoost.py
-
-  定义了类SecureXGboost，
-
-  ```
-  class SecureXGboost:
-  ```
-
-  在类下定义了初始化函数_init__和训练函数fit。
-
-  ```
-  def __init__(self, Server, Clients):
-  
-  def fit(self, X_train, X_test, params={
-              'max_depth': 4,
-              'eta': 0.3,
-              'objective': 'binary:logistic',
-              'min_child_weight': 2,
-              'max_bin': 10,
-              'eval_metric': 'auc',
-              'verbosity':1,
-              'hess_key': 'hess',
-              'grad_key': 'grad',
-              'label_key': 'Category',
-              'num_boost_round':6  # 轮数
-          }):
-   
-  ```
-
-- ##### new_model_example.py
-
-  添加新模型标准格式的示例。
-
-#### header.py
-
-header下统一导入了实现的所有模型， 再定义了model_selector 类来初始化所选的模型，接着调用训练和预测函数。
-
-```
-class model_selector:
-```
-
-在model_selector 类下定义了模型初始化函数，训练函数和预测函数，同时调用timging函数来计时。
-
-```
-    @timing
-    def __init__(self, model_id=int, *args, **kwargs):
-```
-
-```
-    @timing
-    def train(self, X_train, y_train, *args, **kwargs):
-```
-
-```
-    @timing
-    def predict(self, X_test, *args, **kwargs):
-```
 
 
-
-#### TextPreprocessor.py
+### TextPreprocessor.py
 
 文本处理器用来对文本数据进行处理，由于邮件信息大多是文本信息，所以使用TextPreprocessor来对数据集进行处理。
 
@@ -352,7 +206,7 @@ class TextPreprocessor
 
 定义 TextPreprocessor类来对文本数据进行处理
 
-##### 调用方法
+#### 调用方法
 
 首先调用函数检查资源
 
@@ -393,56 +247,21 @@ preprocessor.save_to_csv(output_file_path='new_SpamData.csv')
 
 
 
-#### toolfunc.py
-
-这里是一些过程中用到的函数
-
-timing 函数用来计算模型训练所需要的时间，用于评估模型
-
-```
-def timing(func):
-```
-
- Divide_X函数用于对数据集进行划分，用于把数据集划分给不同的节点，可以按水平的方式划分，也可以按竖直的方式划分，默认以数值的方式划分
-
-```python
-def Divide_X(data, start=0.0, end=1.0, direction='c'):
-```
-
-**参数说明**
-
-- data 需要划分的数据
-- start 划分数据部分的开头
-- end 划分数据结尾
-- direction 划分数据的方式
-
-Divide_y函数用于划分数据集的标签
-
-```python
-def Divide_y(label, start=0.0, end=1.0):
-```
-
-
-
 ### quick_start
 
-该目录下给出了两个使用的例子
+该目录下给出了SecureLogisticRegression 模型的单节点仿真和集群仿真的示例，SecureNN 模型的单节点仿真示例。
 
-##### main_ClusterSimulation.py
+**main_SingleNode.py**
 
-##### main_SingleNode.py
+**main_ClusterSimulation.py**
 
-
-
-### data
-
-数据集文件夹，包含实例**SpamData.csv**
+**main_NN.py**
 
 
 
 ### LICENSE
 
-Apache License 2.0
+该项目签署了[Apache License 2.0](https://github.com/MapleleavesCX/SS_SPAM/blob/v0.1.0/LICENSE)授权许可.
 
 
 
@@ -458,7 +277,7 @@ git clone https://github.com/MapleleavesCX/SS_SPAM.git
 
 
 
-#### 添加新模型
+### 添加新模型
 
 ​		1.以SS_SPAM/ml/model/new_model_example.py提供的模型标准创建新的模型代码添加到SS_SPAM/ml/model下。
 
@@ -487,14 +306,13 @@ git clone https://github.com/MapleleavesCX/SS_SPAM.git
 
 ## 联系方式
 
-[
-MapleleavesCX](https://github.com/MapleleavesCX)   3218391825@qq.com
+[MapleleavesCX](https://github.com/MapleleavesCX)   3218391825@qq.com
 
 
 
 ## 致谢
 
-首先非常感谢山东大学网络空间安全学院的李增鹏老师对于我们小组的指导，其次也感谢数据直通队内每一个队员的辛苦付出，以下排名不分先后。
+首先非常感谢山东大学网络空间安全学院的李增鹏老师对于我们小组的指导和隐语平台提供的资源，其次也感谢数据直通队内每一个队员的辛苦付出，以下排名不分先后。
 
 [MapleleavesCX](https://github.com/MapleleavesCX)
 
