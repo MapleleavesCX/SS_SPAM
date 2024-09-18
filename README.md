@@ -108,7 +108,7 @@ ss_spam下定义了多个函数。
   - extract_feat_method 特征工程处理方法选择（必选）
     - 'bow'
     - 'tfidf'
-  -  reduce_dim_method 降维方法（必选）
+  - reduce_dim_method 降维方法（必选）
     - 'pca'
     - 'svd'
   - parties   成员列表 （必选）
