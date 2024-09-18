@@ -25,8 +25,8 @@ class SecureDecisionTree:
         self.Xgb = Xgb(spu)
 
     def fit(self, X_train, y_train, params = {
-	    'num_boost_round': 2,
-	    'max_depth': 2,
+	    'num_boost_round': 5,
+	    'max_depth': 5,
 	    'learning_rate': 0.1,
 	    'sketch_eps': 0.08,
 	    'objective': 'logistic',
