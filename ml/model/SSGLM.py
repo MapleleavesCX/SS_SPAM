@@ -24,7 +24,7 @@ class SecureSSGLM:
     def fit(self, X_train, y_train, option='sgd', sgd_LR=0.1, sgd_BatchSize=1024, params = {
                     'offset':None,
                     'weight':None,
-                    'epochs': 30,
+                    'epochs': 100,
                     'l2_lambda': 0.01
                 }):
         # 根据官方文档：
