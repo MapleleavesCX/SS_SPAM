@@ -251,7 +251,11 @@ run.filter(memberKey='alice', input_text_path=spam1_path,
 
 ### newTextPreprocessor.py
 
-文本处理器用来对文本数据进行处理，由于邮件信息大多是文本信息，所以使用TextPreprocessor来对数据集进行处理。
+新版的文本处理器相比旧版拥有更合理的API设置，更简明的代码结构，主要区别如下：
+- 将特征工程方法选择、降维方法选择等内容移动到初始化
+- 删除了函数 get_X_y 将对文本与标签二者的处理分开，从而允许对无标签的数据集进行处理，其中：
+  - 删除了函数 extract_features 、reduce_dimensions，合为一个函数 Processing_features，专门处理文本
+  - 增加了函数 Processing_labels，专门处理标签
 
 ```
 class TextPreprocessor
