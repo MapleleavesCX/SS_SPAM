@@ -84,9 +84,9 @@ SS_SPAM v0.2.0
 class pp_spam_filter:
 ```
 
-pp_spam_filte是主调类，负责统一不同模块之间不同调用的方式，这样用同一个api就可以调用不同的模块。
+pp_spam_filter是主调类，负责统一不同模块之间不同调用的方式，这样用同一个API就可以调用不同的模块。
 
-ss_spam下定义了多个函数。
+pp_spam_filter下定义了多个函数:
 
 - _init___用于初始化模型 
 
