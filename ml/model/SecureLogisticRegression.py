@@ -24,7 +24,7 @@ class SecureLogisticRegression:
         self.model = SSRegression(spu)
 
     def fit(self, X_train, y_train, params = {
-            'epochs':2,
+            'epochs':5,
             'learning_rate':0.3,
             'batch_size':32,
             'sig_type':'t1',
