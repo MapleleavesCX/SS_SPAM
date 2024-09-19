@@ -37,14 +37,14 @@ v0.2.0版本相比v0.1.0版本改进如下：
 如 check_nltk_resources 自动化下载失败，可以尝试手动下载，步骤如下：
 https://www.nltk.org/nltk_data/
 - 下载文件:
-    id: stopwords
-    id: punkt
-    id: punkt_tab
+    - id: stopwords
+    - id: punkt
+    - id: punkt_tab
 - 解压后放置到根目录文件夹，各文件路径如下：
-    stopwords: nltk_data/corpora/
-    punkt 和 punkt_tab: nltk_data/tokenizers/
+    - stopwords: nltk_data/corpora/
+    - punkt 和 punkt_tab: nltk_data/tokenizers/
 - 在根目录启动命令行，输入指令，把相关内容路径添加到 nltk 路径：
-    export NLTK_DATA='/path/to/SS_SPAM-0.2.0/nltk_data'
+    - export NLTK_DATA='/path/to/SS_SPAM-0.2.0/nltk_data'
 
 
 
