@@ -29,22 +29,22 @@ v0.2.0版本相比v0.1.0版本改进如下：
 - secretflow 1.5.0b0
   - https://www.secretflow.org.cn/zh-CN/docs/secretflow/v1.5.0b0/source/secretflow
 - python >=3.10
-- scikit-learn v1.5.1
-- nltk v3.8.1  
+- scikit-learn v1.5.1 
 - pandas v1.5.1
+- nltk v3.8.1 
 
-    初次使用需要下载处理文本的停用词等内容，内置自动下载函数 check_nltk_resources 请保证网络条件通畅；
-    如 check_nltk_resources 自动化下载失败，可以尝试手动下载，步骤如下：
-    https://www.nltk.org/nltk_data/
-    - 下载文件:
-        id: stopwords
-        id: punkt
-        id: punkt_tab
-    - 解压后放置到根目录文件夹，各文件路径如下：
-        stopwords: nltk_data/corpora/
-        punkt 和 punkt_tab: nltk_data/tokenizers/
-    - 在根目录启动命令行，输入指令，把相关内容路径添加到 nltk 路径：
-        export NLTK_DATA='/path/to/SS_SPAM-0.2.0/nltk_data'
+文本处理器初次使用需要下载处理文本的停用词等内容，内置自动下载函数 check_nltk_resources 请保证网络条件通畅；
+如 check_nltk_resources 自动化下载失败，可以尝试手动下载，步骤如下：
+https://www.nltk.org/nltk_data/
+- 下载文件:
+    id: stopwords
+    id: punkt
+    id: punkt_tab
+- 解压后放置到根目录文件夹，各文件路径如下：
+    stopwords: nltk_data/corpora/
+    punkt 和 punkt_tab: nltk_data/tokenizers/
+- 在根目录启动命令行，输入指令，把相关内容路径添加到 nltk 路径：
+    export NLTK_DATA='/path/to/SS_SPAM-0.2.0/nltk_data'
 
 
 
