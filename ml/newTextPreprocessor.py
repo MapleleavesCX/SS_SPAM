@@ -23,17 +23,18 @@
 '''
 
 import sys
+from toolfunc import TerminalColors
 
 # 首先检查nltk是否安装，未安装则自动安装
 try:
     import nltk
 except ImportError:
     # 尝试安装 nltk
-    print("nltk is not installed. Attempting to install it...")
+    print(TerminalColors.BRIGHT_CYAN+"nltk is not installed. Attempting to install it..."+TerminalColors.END)
     try:
         import pip
         pip.main(['install', 'nltk'])
-        print("nltk has been successfully installed.")
+        print(TerminalColors.BRIGHT_CYAN+"nltk has been successfully installed."+TerminalColors.END)
     except Exception as e:
         print(f"Failed to install nltk: {e}")
         sys.exit(1)
@@ -55,7 +56,8 @@ def check_nltk_resources():
     try:
         # 尝试获取停用词
         stopwords.words('english')
-        print("[None]Stopwords are already downloaded.")
+        print(TerminalColors.BRIGHT_GREEN+
+              "[None]Stopwords are already downloaded."+TerminalColors.END)
 
     except LookupError:
         print("Downloading stopwords...")
@@ -63,26 +65,29 @@ def check_nltk_resources():
         try:
             nltk.download('stopwords', quiet=False)
             stopwords.words('english')
-            print("Success!")
+            print(TerminalColors.BRIGHT_GREEN+"Success!"+TerminalColors.END)
 
         except Exception as e:
-            print(f"[E] Failed to download stopwords: {e}")
+            print(TerminalColors.BRIGHT_RED+
+                  f"[E] Failed to download stopwords: {e}"+TerminalColors.END)
             sys.exit(1)
 
     try:
         # 尝试获取Punkt tokenizer
         nltk.data.find('tokenizers/punkt')
-        print("[None]Punkt tokenizer is already downloaded.")
+        print(TerminalColors.BRIGHT_GREEN+
+              "[None]Punkt tokenizer is already downloaded."+TerminalColors.END)
 
     except LookupError:
         print("Downloading Punkt tokenizer...")
         try:
             nltk.download('punkt', quiet=False)
             nltk.data.find('tokenizers/punkt')
-            print("Success!")
+            print(TerminalColors.BRIGHT_GREEN+"Success!"+TerminalColors.END)
 
         except Exception as e:
-            print(f"[E] Failed to download Punkt tokenizer: {e}")
+            print(TerminalColors.BRIGHT_RED+
+                  f"[E] Failed to download Punkt tokenizer: {e}"+TerminalColors.END)
             sys.exit(1)
 
 
@@ -222,10 +227,10 @@ class TextPreprocessor:
             return None
         if self.features is not None:
             # 将特征向量转换为 DataFrame
-            feature_df = pd.DataFrame(self.reduced_features,
-                columns=[f'feature_{i}' for i in range(self.reduced_features.shape[1])])
+            feature_df = pd.DataFrame(self.features,
+                columns=[f'feature_{i}' for i in range(self.features.shape[1])])
             
-            if self.labels != None:
+            if self.labels is not None:
                 # 有标签情况
                 result_df = pd.concat([self.labels, feature_df], axis=1)
                 result_df.to_csv(output_file_path, index=False)
@@ -240,27 +245,40 @@ class TextPreprocessor:
 
 # 示例使用
 if __name__ == '__main__':
+
+    spam_path = '/data/spam2.csv'
+    classif_spam={0:0, 1:1}
+    column_X_spam='Body'
+    column_y_spam='Label'
+    encoding_spam='ctf-8'
+
+
+    import os
+    # 获取当前文件所在的绝对路径然后提取其父目录，即项目的根目录
+    ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # 将项目的根目录添加到系统路径中
+    sys.path.append(ROOT_DIR)
     # 调用函数检查资源
     check_nltk_resources()
 
     # 调用文本处理,填入数据集路径名称<data_name>.csv与输出路径文件名称<new_data_name>.csv
-    preprocessor = TextPreprocessor(extract_features_method='tfidf', 
+    preprocessor = TextPreprocessor(extract_feat_method='tfidf', 
                                     reduce_dim_method='pca', n_components=1000)
 
     # 加载数据
     print("加载数据...")
-    data = preprocessor.load_data(input_file_path='../data/SpamData.csv')
+    data = preprocessor.load_data(input_file_path=ROOT_DIR+spam_path)
 
     # 提取特征（内置预处理数据）
     print("提取特征与降维...")
-    features = preprocessor.Processing_features('Message')
+    features = preprocessor.Processing_features(column_X_spam)
 
     print('标签标准化...')
-    labels = preprocessor.Processing_labels('Category', {'ham': 0, 'spam': 1})
+    labels = preprocessor.Processing_labels(column_y_spam)
 
     # 保存处理后的数据到CSV文件
     print("保存中...")
-    preprocessor.save_to_csv(output_file_path='../data/new_SpamData.csv')
+    preprocessor.save_to_csv(output_file_path=ROOT_DIR+'/data/new_SpamData.csv')
 
     print("over!")
 
