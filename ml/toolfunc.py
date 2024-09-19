@@ -3,6 +3,29 @@ import numpy as np
 import pandas as pd
 
 
+# 终端色彩打印
+class TerminalColors:
+    END = '\033[0m'   # 颜色生效终止符
+    
+    BLACK = '\033[30m'
+    RED = '\033[31m'
+    GREEN = '\033[32m'
+    YELLOW = '\033[33m'
+    BLUE = '\033[34m'
+    MAGENTA = '\033[35m'
+    CYAN = '\033[36m'
+    WHITE = '\033[37m'
+    BRIGHT_BLACK = '\033[90m'
+    BRIGHT_RED = '\033[91m'
+    BRIGHT_GREEN = '\033[92m'
+    BRIGHT_YELLOW = '\033[93m'
+    BRIGHT_BLUE = '\033[94m'
+    BRIGHT_MAGENTA = '\033[95m'
+    BRIGHT_CYAN = '\033[96m'
+    BRIGHT_WHITE = '\033[97m'
+
+
+
 def timing(func):
     '''
     计时函数 装饰器：
@@ -13,7 +36,9 @@ def timing(func):
         result = func(*args, **kwargs)
         end_time = time.time()
         elapsed_time = (end_time - start_time) * 1000  # 转换为毫秒
-        print(f"{func.__name__} 函数用时：{elapsed_time:.3f} ms")
+        print(TerminalColors.BRIGHT_WHITE + 
+              f"{func.__name__} 函数用时：{elapsed_time:.3f} ms"
+                + TerminalColors.END)
         return result
     return wrapper
 
@@ -50,6 +75,8 @@ def Divide_y(label, start=0.0, end=1.0):
         sliced_label = sliced_label.ravel()
     
     return sliced_label
+
+
 
 
 # 示例使用
